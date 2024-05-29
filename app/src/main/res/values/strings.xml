@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">MusicPlayerProject</string>
+    <string name="title_home">Home</string>
+    <string name="title_search">Search</string>
+    <string name="title_profile">Profile</string>
+    <string name="Settings">Settings</string>
+    <string name="change_username">Change Username</string>
+    <string name="username">Aghagha</string>
+    <string name="change_theme">Change Theme</string>
+
+    <integer-array name="relic_img">
+        <item>@drawable/tesalbum1</item>
+        <item>@drawable/tesalbum2</item>
+        <item>@drawable/tesalbum1</item>
+        <item>@drawable/tesalbum2</item>
+        <item>@drawable/tesalbum1</item>
+        <item>@drawable/tesalbum2</item>
+        <item>@drawable/tesalbum1</item>
+        <item>@drawable/tesalbum2</item>
+<!--        <item>@drawable/ashblazing</item>-->
+<!--        <item>@drawable/band</item>-->
+<!--        <item>@drawable/champion</item>-->
+<!--        <item>@drawable/eagle</item>-->
+<!--        <item>@drawable/firesmith</item>-->
+<!--        <item>@drawable/genius</item>-->
+<!--        <item>@drawable/guard</item>-->
+<!--        <item>@drawable/hunter_forest</item>-->
+<!--        <item>@drawable/knight</item>-->
+<!--        <item>@drawable/longevous</item>-->
+    </integer-array>
+
+</resources>
