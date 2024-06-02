@@ -72,7 +72,7 @@
         android:layout_height="wrap_content"
         android:text="Explore"
         android:fontFamily="@font/poppinsbold"
-        android:textColor="@color/black"
+        android:textColor="@color/text_default_color"
         android:textSize="25sp"
         android:textAlignment="textStart"
         android:layout_marginStart="20sp"
@@ -89,56 +89,55 @@
         android:layout_marginLeft="20sp"
         android:layout_marginRight="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/explore_text"
-        android:orientation="horizontal">
+        app:layout_constraintTop_toBottomOf="@id/explore_text">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_explore"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:listitem="@layout/item_row_relics"
-                android:orientation="horizontal"/>
+                tools:listitem="@layout/item_row_relics" />
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/hits_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Play the Hits"
-        android:fontFamily="@font/poppinsbold"
-        android:textColor="@color/black"
-        android:textSize="25sp"
-        android:textAlignment="textStart"
-        android:layout_marginStart="20sp"
-        android:layout_marginTop="15sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_explore"
-        />
+<!--    <TextView-->
+<!--        android:id="@+id/hits_text"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Play the Hits"-->
+<!--        android:fontFamily="@font/poppinsbold"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textSize="25sp"-->
+<!--        android:textAlignment="textStart"-->
+<!--        android:layout_marginStart="20sp"-->
+<!--        android:layout_marginTop="15sp"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/layout_explore"-->
+<!--        />-->
 
-    <LinearLayout
-        android:id="@+id/layout_hits"
-        android:layout_width="match_parent"
-        android:layout_height="140sp"
-        android:layout_marginTop="10sp"
-        android:layout_marginLeft="20sp"
-        android:layout_marginRight="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/hits_text"
-        android:orientation="horizontal">
+<!--    <LinearLayout-->
+<!--        android:id="@+id/layout_hits"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="140sp"-->
+<!--        android:layout_marginTop="10sp"-->
+<!--        android:layout_marginLeft="20sp"-->
+<!--        android:layout_marginRight="20sp"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/hits_text"-->
+<!--        android:orientation="horizontal">-->
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/bg_profile"
-            />
+<!--        <ImageView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:src="@drawable/bg_profile"-->
+<!--            />-->
 
 <!--        <androidx.recyclerview.widget.RecyclerView-->
 <!--            android:id="@+id/rv_hits"-->
 <!--            android:layout_width="match_parent"-->
 <!--            android:layout_height="match_parent"-->
-<!--            android:orientation="horizontal"/>-->
-    </LinearLayout>
+<!--            android:orientation="horizontal"-->
+<!--            tools:listitem="@layout/item_row_relics"/>-->
+<!--    </LinearLayout>-->
 
     <TextView
         android:id="@+id/playlist_text"
@@ -146,13 +145,13 @@
         android:layout_height="wrap_content"
         android:text="Your Playlist"
         android:fontFamily="@font/poppinsbold"
-        android:textColor="@color/black"
+        android:textColor="@color/text_default_color"
         android:textSize="25sp"
         android:textAlignment="textStart"
         android:layout_marginStart="20sp"
         android:layout_marginTop="15sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_hits"
+        app:layout_constraintTop_toBottomOf="@id/layout_explore"
         />
 
     <LinearLayout
