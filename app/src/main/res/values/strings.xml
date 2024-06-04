@@ -7,6 +7,7 @@
     <string name="change_username">Change Username</string>
     <string name="username">Aghagha</string>
     <string name="change_theme">Change Theme</string>
+    <string name="artists_song_lyrics_and_more">Artists, Song, Lyrics, and More</string>
 
     <integer-array name="relic_img">
         <item>@drawable/tesalbum1</item>
