@@ -49,7 +49,7 @@
         android:layout_width="370dp"
         android:layout_height="50dp"
         android:layout_marginTop="60sp"
-        android:textColor="@color/black"
+        android:textColor="@color/text_default_color"
         android:fontFamily="@font/poppinsbold"
         android:text="@string/Settings"
         android:textSize="27sp"
@@ -67,6 +67,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/settings">
+
+        <Button
+            android:id="@+id/btn_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
