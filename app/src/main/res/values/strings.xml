@@ -4,7 +4,7 @@
     <string name="title_search">Search</string>
     <string name="title_profile">Profile</string>
     <string name="Settings">Settings</string>
-    <string name="change_username">Change Username</string>
+    <string name="edit_profile">Edit Profile</string>
     <string name="username">Username</string>
     <string name="change_theme">Change Theme</string>
 
@@ -14,7 +14,7 @@
     <string name="email">Email</string>
     <string name="name">Name</string>
 
-    <integer-array name="relic_img">
+    <integer-array name="music_img">
         <item>@drawable/tesalbum1</item>
         <item>@drawable/tesalbum2</item>
         <item>@drawable/tesalbum1</item>
@@ -23,16 +23,15 @@
         <item>@drawable/tesalbum2</item>
         <item>@drawable/tesalbum1</item>
         <item>@drawable/tesalbum2</item>
-        <!--        <item>@drawable/ashblazing</item>-->
-        <!--        <item>@drawable/band</item>-->
-        <!--        <item>@drawable/champion</item>-->
-        <!--        <item>@drawable/eagle</item>-->
-        <!--        <item>@drawable/firesmith</item>-->
-        <!--        <item>@drawable/genius</item>-->
-        <!--        <item>@drawable/guard</item>-->
-        <!--        <item>@drawable/hunter_forest</item>-->
-        <!--        <item>@drawable/knight</item>-->
-        <!--        <item>@drawable/longevous</item>-->
+    </integer-array>
+
+    <integer-array name="playlist_img">
+        <item>@drawable/bg_profile</item>
+        <item>@drawable/prof_pict</item>
+        <item>@drawable/bg_profile</item>
+        <item>@drawable/prof_pict</item>
+        <item>@drawable/bg_profile</item>
+        <item>@drawable/prof_pict</item>
     </integer-array>
 
 </resources>

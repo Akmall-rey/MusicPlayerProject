@@ -1,9 +1,9 @@
 package com.example.musicplayerproject.ui.home
 
-import kotlinx.parcelize.Parcelize
 import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class Relic(
+data class Music(
     val img: Int
 ) : Parcelable
