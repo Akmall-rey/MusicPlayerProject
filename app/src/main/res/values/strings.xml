@@ -7,6 +7,9 @@
     <string name="change_username">Change Username</string>
     <string name="username">Username</string>
     <string name="change_theme">Change Theme</string>
+
+    <string name="artists_song_lyrics_and_more">Artists, Song, Lyrics, and More</string>
+
     <string name="save">Save</string>
     <string name="email">Email</string>
     <string name="name">Name</string>
