@@ -60,14 +60,14 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppinsbold"
         android:text="Browse Categories"
-        android:textColor="@color/black"
+        android:textColor="@color/text_default_color"
         android:textSize="27sp"
         android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/album_recyclerview">
+        tools:listitem="@layout/item_row_music">
 
     </androidx.recyclerview.widget.RecyclerView>
 

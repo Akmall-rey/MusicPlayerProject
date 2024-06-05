@@ -92,7 +92,7 @@
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="@string/change_username"
+                android:hint="@string/edit_profile"
                 android:textColor="@color/abae_76"
                 android:textColorHint="@color/abae_76"
                 android:fontFamily="@font/poppinsmedium"
