@@ -173,5 +173,4 @@
             tools:listitem="@layout/item_row_playlist"/>
 
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

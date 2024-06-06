@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.musicplayerproject.databinding.SearchResultRecyclerviewBinding
 
-class SongAdapter(private val listSong: ArrayList<MusicFiles>) :
-    RecyclerView.Adapter<SongAdapter.ListViewHolder>() {
+class MusicAdapter(private val listMusic: ArrayList<MusicFiles>) :
+    RecyclerView.Adapter<MusicAdapter.ListViewHolder>() {
 
     private lateinit var onItemClickCallback: OnItemClickCallback
 
@@ -27,17 +27,17 @@ class SongAdapter(private val listSong: ArrayList<MusicFiles>) :
         return ListViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = listSong.size
+    override fun getItemCount(): Int = listMusic.size
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        val (title, singer, img) = listSong[position]
+        val musicFile = listMusic[position]
         with(holder.binding) {
-            songCover.setImageResource(img)
-            songTitle.text = title
-            songSinger.text = singer
+            songTitle.text = musicFile.getTitle()
+            songSinger.text = musicFile.getArtist()
+
         }
         holder.itemView.setOnClickListener {
-            onItemClickCallback.onItemClicked(listSong[holder.adapterPosition])
+            onItemClickCallback.onItemClicked(listMusic[holder.adapterPosition])
         }
     }
 

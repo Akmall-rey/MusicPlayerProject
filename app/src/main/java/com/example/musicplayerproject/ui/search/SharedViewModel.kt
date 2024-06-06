@@ -1,4 +1,15 @@
-package com.example.musicplayerproject.ui.search
+package com.example.musicplayerproject.ui.shared
 
-class SharedViewModel {
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import com.example.musicplayerproject.ui.search.MusicFiles
+
+class SharedViewModel : ViewModel() {
+    private val _musicFiles = MutableLiveData<ArrayList<MusicFiles>>()
+    val musicFiles: LiveData<ArrayList<MusicFiles>> get() = _musicFiles
+
+    fun setMusicFiles(musicList: ArrayList<MusicFiles>) {
+        _musicFiles.value = musicList
+    }
 }
