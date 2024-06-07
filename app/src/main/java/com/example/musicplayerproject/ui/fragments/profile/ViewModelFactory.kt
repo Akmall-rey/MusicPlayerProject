@@ -1,8 +1,8 @@
-package com.example.musicplayerproject.ui.profile
+package com.example.musicplayerproject.ui.fragments.profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.musicplayerproject.ui.home.HomeViewModel
+import com.example.musicplayerproject.ui.fragments.home.HomeViewModel
 
 class ViewModelFactory(private val pref: SettingPreferences) : ViewModelProvider.NewInstanceFactory() {
 

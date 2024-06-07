@@ -1,4 +1,4 @@
-package com.example.musicplayerproject.ui.home
+package com.example.musicplayerproject.ui.fragments.home
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,8 +6,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.musicplayerproject.R
+import com.example.musicplayerproject.data.models.Music
 
-class ListMusicAdapter(private val listRelic: ArrayList<Music>) : RecyclerView.Adapter<ListMusicAdapter.ListViewHolder>() {
+class ListMusicAdapter(private val listMusic: ArrayList<Music>) : RecyclerView.Adapter<ListMusicAdapter.ListViewHolder>() {
     private lateinit var onItemClickCallback: OnItemClickCallback
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
@@ -23,12 +24,12 @@ class ListMusicAdapter(private val listRelic: ArrayList<Music>) : RecyclerView.A
         return ListViewHolder(view)
     }
 
-    override fun getItemCount(): Int = listRelic.size
+    override fun getItemCount(): Int = listMusic.size
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        val (img) = listRelic[position]
+        val (img) = listMusic[position]
         holder.imgPhoto.setImageResource(img)
-        holder.itemView.setOnClickListener { onItemClickCallback.onItemClicked(listRelic[holder.adapterPosition])}
+        holder.itemView.setOnClickListener { onItemClickCallback.onItemClicked(listMusic[holder.adapterPosition])}
     }
 
     interface OnItemClickCallback {

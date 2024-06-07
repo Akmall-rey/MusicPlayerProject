@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.HomeFragment">
+    tools:context=".ui.fragments.home.HomeFragment">
 
     <ImageView
         android:id="@+id/bg_top"
@@ -17,13 +17,14 @@
         app:layout_constraintTop_toTopOf="parent"
         />
 
-    <ImageView
-        android:id="@+id/img_home"
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/profile_img"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:scaleType="centerCrop"
         android:src="@drawable/prof_pict"
         android:layout_marginEnd="30sp"
+        app:shapeAppearanceOverlay="@style/circular"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/bg_top"
         app:layout_constraintBottom_toBottomOf="@id/bg_top"/>
@@ -34,7 +35,7 @@
         android:layout_marginStart="20sp"
         app:layout_constraintTop_toTopOf="@id/bg_top"
         app:layout_constraintBottom_toBottomOf="@id/bg_top"
-        app:layout_constraintEnd_toStartOf="@id/img_home"
+        app:layout_constraintEnd_toStartOf="@id/profile_img"
         app:layout_constraintStart_toStartOf="parent"
         >
 
@@ -48,11 +49,11 @@
             android:textSize="25sp"
             android:textAlignment="textStart"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/username_home"
+            app:layout_constraintBottom_toTopOf="@id/username"
             />
 
         <TextView
-            android:id="@+id/username_home"
+            android:id="@+id/username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/username"

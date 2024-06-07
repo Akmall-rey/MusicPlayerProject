@@ -14,8 +14,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.musicplayerproject.databinding.ActivityMainBinding
-import com.example.musicplayerproject.ui.search.MusicFiles
-import com.example.musicplayerproject.ui.search.MusicRepository
+import com.example.musicplayerproject.data.models.MusicFiles
+import com.example.musicplayerproject.ui.fragments.search.MusicRepository
 import com.example.musicplayerproject.ui.shared.SharedViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
