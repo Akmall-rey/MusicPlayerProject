@@ -1,4 +1,4 @@
-package com.example.musicplayerproject.ui.search
+package com.example.musicplayerproject.data.models
 
 class MusicFiles {
     private val path: String

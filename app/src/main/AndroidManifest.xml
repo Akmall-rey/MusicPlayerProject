@@ -16,7 +16,7 @@
         android:theme="@style/Theme.MusicPlayerProject"
         tools:targetApi="31">
         <activity
-            android:name=".ui.profile.EditProfile"
+            android:name=".ui.fragments.profile.EditProfile"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

@@ -1,4 +1,4 @@
-package com.example.musicplayerproject.ui.profile
+package com.example.musicplayerproject.ui.fragments.profile
 
 import android.content.Context
 import androidx.datastore.core.DataStore

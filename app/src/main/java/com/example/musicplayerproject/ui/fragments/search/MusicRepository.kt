@@ -1,9 +1,10 @@
-package com.example.musicplayerproject.ui.search
+package com.example.musicplayerproject.ui.fragments.search
 
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 import android.provider.MediaStore
+import com.example.musicplayerproject.data.models.MusicFiles
 
 class MusicRepository {
     fun getAllAudio(context: Context): ArrayList<MusicFiles> {

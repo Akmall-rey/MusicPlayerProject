@@ -7,7 +7,7 @@
     android:layout_marginHorizontal="16dp"
     android:orientation="vertical"
     android:padding="0dp"
-    tools:context=".ui.search.SearchFragment">
+    tools:context=".ui.fragments.search.SearchFragment">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/search_music"

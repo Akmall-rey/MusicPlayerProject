@@ -3,7 +3,7 @@ package com.example.musicplayerproject.ui.shared
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.musicplayerproject.ui.search.MusicFiles
+import com.example.musicplayerproject.data.models.MusicFiles
 
 class SharedViewModel : ViewModel() {
     private val _musicFiles = MutableLiveData<ArrayList<MusicFiles>>()

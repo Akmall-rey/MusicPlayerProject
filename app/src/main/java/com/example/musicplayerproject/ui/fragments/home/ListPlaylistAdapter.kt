@@ -1,4 +1,4 @@
-package com.example.musicplayerproject.ui.home
+package com.example.musicplayerproject.ui.fragments.home
 
 import android.view.LayoutInflater
 import android.view.View

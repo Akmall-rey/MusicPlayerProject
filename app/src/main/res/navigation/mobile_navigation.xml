@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.musicplayerproject.ui.home.HomeFragment"
+        android:name="com.example.musicplayerproject.ui.fragments.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.example.musicplayerproject.ui.search.SearchFragment"
+        android:name="com.example.musicplayerproject.ui.fragments.search.SearchFragment"
         android:label="@string/title_search"
         tools:layout="@layout/fragment_search" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.musicplayerproject.ui.profile.ProfileFragment"
+        android:name="com.example.musicplayerproject.ui.fragments.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
 </navigation>
