@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TextViewBody1" parent="TextAppearance.MaterialComponents.Body1" />
+    <style name="OverFlowButton">
+        <item name="srcCompat">@drawable/ic_more_vert</item>
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:scaleType">center</item>
+        <item name="android:focusableInTouchMode">false</item>
+        <item name="android:focusable">false</item>
+    </style>
+
+    <style name="TextViewButton" parent="TextAppearance.MaterialComponents.Button" />
+
+    <style name="Toolbar" parent="Widget.Material3.Toolbar">
+        <item name="layout_collapseMode">pin</item>
+        <item name="contentInsetStartWithNavigation">0dp</item>
+        <item name="contentInsetStart">0dp</item>
+        <item name="titleMarginStart">16dp</item>
+    </style>
+
+</resources>
