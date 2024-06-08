@@ -19,12 +19,8 @@ class MusicAdapter(private val listMusic: ArrayList<MusicFiles>) :
         RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
-        val binding =
-            SearchResultRecyclerviewBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
+        val binding = SearchResultRecyclerviewBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false)
         return ListViewHolder(binding)
     }
 
