@@ -1,8 +1,9 @@
-package com.example.musicplayerproject.ui.search
+package com.example.musicplayerproject.ui.fragments.search
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.musicplayerproject.data.models.MusicFiles
 import com.example.musicplayerproject.databinding.SearchResultRecyclerviewBinding
 import com.example.musicplayerproject.ui.search.MusicFiles
 

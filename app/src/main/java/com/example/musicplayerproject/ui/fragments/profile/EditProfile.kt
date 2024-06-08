@@ -1,14 +1,16 @@
-package com.example.musicplayerproject.ui.profile
+package com.example.musicplayerproject.ui.fragments.profile
 
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
@@ -16,9 +18,11 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.edit
 import com.example.musicplayerproject.R
+import com.example.musicplayerproject.data.models.User
 import com.example.musicplayerproject.databinding.ActivityEditProfileBinding
+import com.example.musicplayerproject.ui.fragments.home.HomeFragment
+import java.io.IOException
 
 class EditProfile : AppCompatActivity(), View.OnClickListener {
 
@@ -37,9 +41,10 @@ class EditProfile : AppCompatActivity(), View.OnClickListener {
 
         const val PREF_NAME = "MyPrefs"
         private const val KEY_USERNAME = "username"
-        const val KEY_PROFILE_IMAGE_URI = "profile_image_uri"
+        const val PROFILE_IMAGE_FILENAME = "profile_image.png"
 
-        const val ACTION_UPDATE_USERNAME = "com.example.roxy.UPDATE_USERNAME"
+        const val ACTION_UPDATE_USERNAME = "com.example.UPDATE_USERNAME"
+        const val ACTION_UPDATE_PROFILE_IMAGE = "com.example.UPDATE_PROFILE_IMAGE"
     }
 
     private lateinit var userModel: User
@@ -102,15 +107,10 @@ class EditProfile : AppCompatActivity(), View.OnClickListener {
         val savedUsername = getUsername()
         binding.username.text = savedUsername ?: getString(R.string.username)
 
-        val savedImageUri = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE).getString(KEY_PROFILE_IMAGE_URI, null)
-        savedImageUri?.let {
-            try {
-                val inputStream = contentResolver.openInputStream(Uri.parse(it))
-                val bitmap = BitmapFactory.decodeStream(inputStream)
-                binding.profileImg.setImageBitmap(bitmap)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+        // Memuat gambar profil dari File Storage saat Activity dimulai
+        val bitmap = loadImageFromInternalStorage(PROFILE_IMAGE_FILENAME)
+        bitmap?.let {
+            binding.profileImg.setImageBitmap(it)
         }
     }
 
@@ -142,14 +142,17 @@ class EditProfile : AppCompatActivity(), View.OnClickListener {
             val bitmap = BitmapFactory.decodeStream(inputStream)
             binding.profileImg.setImageBitmap(bitmap)
 
-            // Simpan URI gambar ke SharedPreferences
-            getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE).edit {
-                putString(KEY_PROFILE_IMAGE_URI, uri.toString())
-                apply()
-            }
+            // Simpan gambar ke File Storage
+            saveImageToInternalStorage(bitmap, PROFILE_IMAGE_FILENAME)
 
-            // Kirim siaran bahwa gambar profil telah diubah
-            sendBroadcast(Intent(ProfileFragment.ACTION_UPDATE_PROFILE_IMAGE))
+            // Kirim broadcast bahwa gambar profil telah diubah
+            val profileImageIntent = Intent(ProfileFragment.ACTION_UPDATE_PROFILE_IMAGE)
+            sendBroadcast(profileImageIntent)
+            Log.d("EditProfile", "Broadcast sent for profile image update")
+
+            val homeImageIntent = Intent(HomeFragment.ACTION_UPDATE_PROFILE_IMAGE)
+            sendBroadcast(homeImageIntent)
+            Log.d("EditProfile", "Broadcast sent for home image update")
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -229,5 +232,26 @@ class EditProfile : AppCompatActivity(), View.OnClickListener {
             finish()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun saveImageToInternalStorage(bitmap: Bitmap, filename: String) {
+        try {
+            openFileOutput(filename, Context.MODE_PRIVATE).use { fos ->
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun loadImageFromInternalStorage(filename: String): Bitmap? {
+        return try {
+            openFileInput(filename).use { fis ->
+                BitmapFactory.decodeStream(fis)
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+            null
+        }
     }
 }

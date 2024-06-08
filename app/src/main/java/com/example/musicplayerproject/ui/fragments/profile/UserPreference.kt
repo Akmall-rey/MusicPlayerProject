@@ -1,6 +1,7 @@
-package com.example.musicplayerproject.ui.profile
+package com.example.musicplayerproject.ui.fragments.profile
 
 import android.content.Context
+import com.example.musicplayerproject.data.models.User
 
 internal class UserPreference(context: Context) {
     companion object {

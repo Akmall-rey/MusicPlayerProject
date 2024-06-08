@@ -1,13 +1,13 @@
-package com.example.musicplayerproject.ui.profile
+package com.example.musicplayerproject.ui.fragments.profile
 
-import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,9 +15,11 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.datastore.core.IOException
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.musicplayerproject.R
+import com.example.musicplayerproject.data.models.User
 import com.example.musicplayerproject.databinding.FragmentProfileBinding
 
 class ProfileFragment : Fragment(), View.OnClickListener {
@@ -30,14 +32,15 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     private var isPreferenceEmpty = false
     private lateinit var userModel: User
     private lateinit var usernameReceiver: BroadcastReceiver
+    private lateinit var profileImageReceiver: BroadcastReceiver // Tambahkan receiver untuk gambar profil
 
     companion object {
         const val PREF_NAME = "MyPrefs"
         const val KEY_USERNAME = "username"
         const val ACTION_UPDATE_PROFILE_IMAGE = "com.example.roxy.UPDATE_PROFILE_IMAGE"
+        const val PROFILE_IMAGE_FILENAME = "profile_image.png"
     }
 
-    @SuppressLint("SuspiciousIndentation")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -90,14 +93,18 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         val filter = IntentFilter(EditProfile.ACTION_UPDATE_USERNAME)
         requireContext().registerReceiver(usernameReceiver, filter)
 
-        // Registrasi receiver untuk menerima broadcast
-        val profileImageReceiver = object : BroadcastReceiver() {
+        // Register profile image receiver
+        profileImageReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
+                Log.d("ProfileFragment", "Broadcast received for profile image update")
                 loadProfileImage()
             }
         }
         val profileImageFilter = IntentFilter(ACTION_UPDATE_PROFILE_IMAGE)
         requireContext().registerReceiver(profileImageReceiver, profileImageFilter)
+
+        // Memuat gambar profil saat fragment dimulai
+        loadProfileImage()
 
         return root
     }
@@ -105,6 +112,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     override fun onDestroyView() {
         super.onDestroyView()
         requireContext().unregisterReceiver(usernameReceiver)
+        requireContext().unregisterReceiver(profileImageReceiver) // Unregister profile image receiver
         _binding = null
     }
 
@@ -135,20 +143,25 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         return sharedPref.getString(KEY_USERNAME, null)
     }
 
+    // Fungsi untuk memuat gambar profil
     private fun loadProfileImage() {
-        // Ambil URI gambar dari SharedPreferences
-        val uriString = requireContext().getSharedPreferences(EditProfile.PREF_NAME, Context.MODE_PRIVATE)
-            .getString(EditProfile.KEY_PROFILE_IMAGE_URI, null)
+        Log.d("ProfileFragment", "Loading profile image")
+        // Memuat gambar profil dari File Storage
+        val bitmap = loadImageFromInternalStorage(PROFILE_IMAGE_FILENAME)
+        bitmap?.let {
+            Log.d("ProfileFragment", "Profile image loaded")
+            binding.profileImg.setImageBitmap(it)
+        } ?: Log.d("ProfileFragment", "Failed to load profile image")
+    }
 
-        // Jika URI tidak kosong, atur gambar profil
-        uriString?.let { uri ->
-            try {
-                val inputStream = requireContext().contentResolver.openInputStream(Uri.parse(uri))
-                val bitmap = BitmapFactory.decodeStream(inputStream)
-                binding.profileImg.setImageBitmap(bitmap)
-            } catch (e: Exception) {
-                e.printStackTrace()
+    private fun loadImageFromInternalStorage(filename: String): Bitmap? {
+        return try {
+            requireContext().openFileInput(filename).use { fis ->
+                BitmapFactory.decodeStream(fis)
             }
+        } catch (e: IOException) {
+            e.printStackTrace()
+            null
         }
     }
 }
