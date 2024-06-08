@@ -10,7 +10,7 @@
     tools:context=".ui.fragments.search.SearchFragment">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/search_music"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -39,7 +39,7 @@
                 app:tint="@color/abae_76" />
 
             <EditText
-
+                android:id="@+id/search_music"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
