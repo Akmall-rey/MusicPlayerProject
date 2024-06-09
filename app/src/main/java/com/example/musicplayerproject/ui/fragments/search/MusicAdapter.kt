@@ -38,6 +38,8 @@ class MusicAdapter(private val listMusic: ArrayList<MusicFiles>) :
         }
     }
 
+//    testing
+
     interface OnItemClickCallback {
         fun onItemClicked(data: MusicFiles)
     }
