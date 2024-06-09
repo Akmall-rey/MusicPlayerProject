@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.musicplayerproject.data.models.MusicFiles
 import com.example.musicplayerproject.databinding.FragmentSearchBinding
 import com.example.musicplayerproject.ui.shared.SharedViewModel
-import com.example.musicplayerproject.ui.search.MusicRepository
 
 class SearchFragment : Fragment() {
 
