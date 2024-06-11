@@ -11,6 +11,10 @@
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
+        <action
+            android:id="@+id/action_homeFragment_to_playlistFragment"
+            app:destination="@id/playlistFragment" />
+
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.example.musicplayerproject.ui.fragments.search.SearchFragment"
@@ -22,4 +26,11 @@
         android:name="com.example.musicplayerproject.ui.fragments.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/playlistFragment"
+        android:name="com.example.musicplayerproject.ui.fragments.home.PlaylistFragment"
+        android:label="Playlist"
+        tools:layout="@layout/fragment_playlist" />
+
 </navigation>

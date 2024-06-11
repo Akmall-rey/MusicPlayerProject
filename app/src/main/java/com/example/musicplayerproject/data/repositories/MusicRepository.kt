@@ -1,4 +1,4 @@
-package com.example.musicplayerproject.ui.fragments.search
+package com.example.musicplayerproject.data.repositories
 
 import android.content.Context
 import android.database.Cursor
