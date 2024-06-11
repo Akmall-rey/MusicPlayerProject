@@ -6,31 +6,42 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.musicplayerproject.R
 import com.example.musicplayerproject.data.models.Music
+import com.example.musicplayerproject.data.models.MusicFiles
+import com.example.musicplayerproject.data.repositories.MusicRepository
 import com.example.musicplayerproject.databinding.FragmentHomeBinding
 import com.example.musicplayerproject.ui.fragments.profile.EditProfile
 import com.example.musicplayerproject.ui.fragments.profile.ProfileFragment
 import com.example.musicplayerproject.ui.fragments.profile.SettingPreferences
 import com.example.musicplayerproject.ui.fragments.profile.ViewModelFactory
 import com.example.musicplayerproject.ui.fragments.profile.dataStore
+import com.example.musicplayerproject.ui.fragments.search.MusicAdapter
 import java.io.IOException
 
 class HomeFragment : Fragment() {
 
     private lateinit var rvExplore: RecyclerView
     private lateinit var rvPlaylist: RecyclerView
+
+    private lateinit var musicAdapter: MusicAdapter
+    private lateinit var musicRepository: MusicRepository
+    private lateinit var musicFiles: ArrayList<MusicFiles>
+    private lateinit var filteredMusicFiles: ArrayList<MusicFiles>
 
     // Daftar musik yang dijelajahi dan playlist
     private val listExplore = ArrayList<Music>()
@@ -59,6 +70,7 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -102,7 +114,7 @@ class HomeFragment : Fragment() {
             }
         }
         val filter = IntentFilter(EditProfile.ACTION_UPDATE_USERNAME)
-        requireContext().registerReceiver(usernameReceiver, filter)
+        requireContext().registerReceiver(usernameReceiver, filter, Context.RECEIVER_NOT_EXPORTED)
 
         // Menambahkan broadcast receiver untuk gambar profil
         profileImageReceiver = object : BroadcastReceiver() {
@@ -112,7 +124,8 @@ class HomeFragment : Fragment() {
             }
         }
         val profileImageFilter = IntentFilter(ACTION_UPDATE_PROFILE_IMAGE)
-        requireContext().registerReceiver(profileImageReceiver, profileImageFilter)
+        requireContext().registerReceiver(profileImageReceiver, profileImageFilter,
+            Context.RECEIVER_NOT_EXPORTED)
 
         // Memuat gambar profil saat fragment dimulai
         loadProfileImage()
@@ -144,6 +157,20 @@ class HomeFragment : Fragment() {
             }
         })
     }
+
+//    private fun setupRecyclerViewSong() {
+//        val recyclerView = binding.fragmentAlbumContent.rvSongs
+//        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+//
+//        listSongAdapter = ListSongAdapter(filteredMusicFiles)
+//        recyclerView.adapter = listSongAdapter
+//
+//        listSongAdapter.setOnItemClickCallback(object : ListSongAdapter.OnItemClickCallback {
+//            override fun onItemClicked(data: MusicFiles) {
+//                // Handle item click
+//            }
+//        })
+//    }
 
     // Fungsi untuk mengambil daftar musik dari sumber daya
     private fun getListMusic(): ArrayList<Music> {
@@ -186,6 +213,8 @@ class HomeFragment : Fragment() {
     private fun showSelectedPlaylist(playlist: Playlist) {
         context?.let {
             Toast.makeText(it, "is selected playlist", Toast.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.action_homeFragment_to_playlistFragment)
+
         }
     }
 
@@ -217,6 +246,15 @@ class HomeFragment : Fragment() {
             null
         }
     }
+
+//    private fun loadMusicFiles() {
+//        // Call repository method to get all audio files
+//        musicFiles.clear()
+//        musicFiles.addAll(musicRepository.getAllAudio(requireContext()))
+//        // Initially display all music files
+//        filteredMusicFiles.clear()
+//        filteredMusicFiles.addAll(musicFiles)
+//    }
 
     // Fungsi untuk membersihkan resource yang tidak lagi dibutuhkan
     override fun onDestroyView() {

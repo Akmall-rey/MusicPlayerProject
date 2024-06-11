@@ -6,12 +6,14 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -41,6 +43,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         const val PROFILE_IMAGE_FILENAME = "profile_image.png"
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -91,7 +94,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
             }
         }
         val filter = IntentFilter(EditProfile.ACTION_UPDATE_USERNAME)
-        requireContext().registerReceiver(usernameReceiver, filter)
+        requireContext().registerReceiver(usernameReceiver, filter, Context.RECEIVER_NOT_EXPORTED)
 
         // Register profile image receiver
         profileImageReceiver = object : BroadcastReceiver() {
@@ -101,7 +104,8 @@ class ProfileFragment : Fragment(), View.OnClickListener {
             }
         }
         val profileImageFilter = IntentFilter(ACTION_UPDATE_PROFILE_IMAGE)
-        requireContext().registerReceiver(profileImageReceiver, profileImageFilter)
+        requireContext().registerReceiver(profileImageReceiver, profileImageFilter,
+            Context.RECEIVER_NOT_EXPORTED)
 
         // Memuat gambar profil saat fragment dimulai
         loadProfileImage()
