@@ -4,4 +4,8 @@
         <item name="cornerSize">50%</item>
     </style>
 
+    <style name="curved">
+        <item name="cornerSize">15%</item>
+    </style>
+
 </resources>
