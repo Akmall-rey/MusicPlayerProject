@@ -17,7 +17,7 @@ class MusicAdapter(
 ) : RecyclerView.Adapter<MusicAdapter.MusicViewHolder>() {
 
     inner class MusicViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val songCover: ImageView = view.findViewById(R.id.song_cover)
+
         val songTitle: TextView = view.findViewById(R.id.song_title)
         val songSinger: TextView = view.findViewById(R.id.song_singer)
     }
@@ -32,12 +32,8 @@ class MusicAdapter(
         val trackItem = data[position]
         holder.songTitle.text = trackItem.strTrack
         holder.songSinger.text = trackItem.strArtist
-        // Load image into songCover using Glide
-        Glide.with(context)
-            .load(trackItem.strTrackThumb)
-            .placeholder(R.drawable.ic_launcher_background) // Add a placeholder image in case of no image
-            .error(R.drawable.ic_launcher_background) // Add an error image in case of an error
-            .into(holder.songCover)
+
+        
     }
 
     override fun getItemCount(): Int = data.size
