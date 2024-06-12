@@ -124,8 +124,10 @@ class HomeFragment : Fragment() {
             }
         }
         val profileImageFilter = IntentFilter(ACTION_UPDATE_PROFILE_IMAGE)
-        requireContext().registerReceiver(profileImageReceiver, profileImageFilter,
-            Context.RECEIVER_NOT_EXPORTED)
+        requireContext().registerReceiver(
+            profileImageReceiver, profileImageFilter,
+            Context.RECEIVER_NOT_EXPORTED
+        )
 
         // Memuat gambar profil saat fragment dimulai
         loadProfileImage()
@@ -133,7 +135,8 @@ class HomeFragment : Fragment() {
 
     // Fungsi untuk mengatur RecyclerView untuk daftar musik yang dijelajahi
     private fun setupRecyclerViewExplore(recyclerView: RecyclerView, list: ArrayList<Music>) {
-        recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        recyclerView.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         val listMusicAdapter = ListMusicAdapter(list)
         recyclerView.adapter = listMusicAdapter
 
@@ -146,7 +149,8 @@ class HomeFragment : Fragment() {
 
     // Fungsi untuk mengatur RecyclerView untuk playlist
     private fun setupRecyclerViewPlaylist(recyclerView: RecyclerView, list: ArrayList<Playlist>) {
-        recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        recyclerView.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         val listPlaylistAdapter = ListPlaylistAdapter(list)
         recyclerView.adapter = listPlaylistAdapter
 
@@ -206,6 +210,7 @@ class HomeFragment : Fragment() {
     private fun showSelectedMusic(music: Music) {
         context?.let {
             Toast.makeText(it, "is selected music", Toast.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.action_homeFragment_to_exploreFragment)
         }
     }
 
@@ -220,7 +225,8 @@ class HomeFragment : Fragment() {
 
     // Fungsi untuk mengambil username dari SharedPreferences
     private fun getUsername(): String? {
-        val sharedPref = requireContext().getSharedPreferences(ProfileFragment.PREF_NAME, Context.MODE_PRIVATE)
+        val sharedPref =
+            requireContext().getSharedPreferences(ProfileFragment.PREF_NAME, Context.MODE_PRIVATE)
         return sharedPref.getString(ProfileFragment.KEY_USERNAME, null)
     }
 

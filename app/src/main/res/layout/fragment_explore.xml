@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.fragments.home.ExploreFragment">
+    tools:context=".ui.fragments.home.explore.ExploreFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -69,9 +69,10 @@
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/music_explore_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:listitem="@layout/item_song" />
+                tools:listitem="@layout/search_result_recyclerview" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
