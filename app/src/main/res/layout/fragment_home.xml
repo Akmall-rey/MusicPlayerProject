@@ -107,30 +107,71 @@
 
         </LinearLayout>
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_titleplaylist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="15sp"
+            app:layout_constraintTop_toBottomOf="@id/layout_explore">
+
+            <TextView
+                android:id="@+id/playlist_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppinsbold"
+                android:text="Your Playlist"
+                android:textAlignment="textStart"
+                android:textColor="@color/text_default_color"
+                android:textSize="25sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/addPlaylistBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_add"
+                android:background="@android:color/transparent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:tint="@color/text_default_color" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        
+<!--        <com.google.android.material.card.MaterialCardView-->
+<!--            android:id="@+id/layout_playlist"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/layout_titleplaylist">-->
+
+
+<!--        </com.google.android.material.card.MaterialCardView>-->
+
         <TextView
-            android:id="@+id/playlist_text"
+            android:id="@+id/instructionPA"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Your Playlist"
-            android:fontFamily="@font/poppinsbold"
-            android:textColor="@color/text_default_color"
-            android:textSize="25sp"
-            android:textAlignment="textStart"
-            android:layout_marginStart="20sp"
-            android:layout_marginTop="15sp"
+            android:textSize="20sp"
+            android:text="@string/playlist_note"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_explore"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/layout_playlist"
+            app:layout_constraintBottom_toBottomOf="@id/layout_playlist"
             />
 
         <LinearLayout
             android:id="@+id/layout_playlist"
             android:layout_width="match_parent"
-            android:layout_height="140sp"
+            android:layout_height="160sp"
             android:layout_marginTop="10sp"
             android:layout_marginLeft="20sp"
             android:layout_marginRight="20sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/playlist_text"
+            app:layout_constraintTop_toBottomOf="@id/layout_titleplaylist"
             android:orientation="horizontal">
 
 
@@ -138,7 +179,7 @@
                 android:id="@+id/rv_playlist"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:listitem="@layout/item_row_playlist"/>
+                tools:listitem="@layout/playlist_view"/>
 
             <TextView
                 android:id="@+id/empty_playlist_text"
@@ -168,6 +209,7 @@
             />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginHorizontal="16dp"
             android:id="@+id/rv_songs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

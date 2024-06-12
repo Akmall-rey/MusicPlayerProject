@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="text_default_color">#FFFFFF</color> <!-- Warna teks default (putih) untuk mode malam -->
-    <color name="text_dark_mode_color">#FFFFFF</color> <!-- Warna teks untuk mode malam (putih) -->
+    <color name="text_dark_mode_color">#121212</color> <!-- Warna teks untuk mode malam (putih) -->
     <color name="abae_76">#76ABAE</color>
     <color name="white">#FFFFFFFF</color>
     <color name="purple_200">#BB86FC</color>
@@ -9,4 +9,5 @@
     <color name="purple_700">#3700B3</color>
     <color name="teal_200">#03DAC5</color>
     <color name="teal_700">#018786</color>
+    <color name="button">#222831</color>
 </resources>

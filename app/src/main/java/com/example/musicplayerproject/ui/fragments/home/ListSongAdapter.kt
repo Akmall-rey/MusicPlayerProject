@@ -7,12 +7,12 @@ import com.example.musicplayerproject.data.models.MusicFiles
 import com.example.musicplayerproject.databinding.ItemSongBinding
 import com.example.musicplayerproject.ui.fragments.search.MusicAdapter
 
-class ListSongAdapter (private val listMusic: ArrayList<MusicFiles>) :
+class ListSongAdapter(private val listMusic: ArrayList<MusicFiles>) :
     RecyclerView.Adapter<ListSongAdapter.ListViewHolder>() {
 
     private lateinit var onItemClickCallback: OnItemClickCallback
 
-    fun setOnItemClickCallback(onItemClickCallback:OnItemClickCallback) {
+    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
         this.onItemClickCallback = onItemClickCallback
     }
 
@@ -30,16 +30,22 @@ class ListSongAdapter (private val listMusic: ArrayList<MusicFiles>) :
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         val musicFile = listMusic[position]
         with(holder.binding) {
-            title.text = musicFile.getTitle()
-
+            titleMusic.text = musicFile.getTitle()
+            timeMusic.text = formatDuration(musicFile.getDuration())
         }
         holder.itemView.setOnClickListener {
             onItemClickCallback.onItemClicked(listMusic[holder.adapterPosition])
         }
     }
 
-
     interface OnItemClickCallback : MusicAdapter.OnItemClickCallback {
         override fun onItemClicked(data: MusicFiles)
+    }
+
+    // Metode untuk mengonversi durasi
+    private fun formatDuration(duration: Long): String {
+        val minutes = (duration / 1000) / 60
+        val seconds = (duration / 1000) % 60
+        return String.format("%02d:%02d", minutes, seconds)
     }
 }

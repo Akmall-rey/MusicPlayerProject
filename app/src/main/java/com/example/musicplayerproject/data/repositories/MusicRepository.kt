@@ -32,7 +32,7 @@ class MusicRepository {
                 val title = it.getString(titleColumn)
                 val artist = it.getString(artistColumn)
                 val album = it.getString(albumColumn)
-                val duration = it.getString(durationColumn)
+                val duration = it.getLong(durationColumn)
                 val musicFile = MusicFiles(path, title, artist, album, duration)
                 audioList.add(musicFile)
             }
