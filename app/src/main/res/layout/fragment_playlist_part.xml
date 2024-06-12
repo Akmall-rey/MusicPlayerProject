@@ -8,7 +8,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/playAction"
-        style="@style/Widget.Material3.Button.OutlinedButton"
+        style="@style/Widget.Material3.Button.Icon"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -16,8 +16,10 @@
         android:paddingVertical="10dp"
         android:text="@string/action_play_all"
         android:textAppearance="@style/TextViewButton"
-        android:textColor="?android:attr/textColorPrimary"
+        android:textColor="@color/text_default_color"
+        android:backgroundTint="@color/button"
         app:icon="@drawable/ic_play_arrow"
+        app:iconTint="@color/text_default_color"
         app:layout_constraintEnd_toStartOf="@+id/shuffleAction"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,27 +34,52 @@
         android:layout_marginEnd="16dp"
         android:paddingVertical="10dp"
         android:text="@string/shuffle"
+        android:textColor="@color/text_default_color"
+        android:backgroundTint="@color/button"
         android:textAppearance="@style/TextViewButton"
         app:icon="@drawable/ic_shuffle"
+        app:iconTint="@color/text_default_color"
         app:layout_constraintBottom_toBottomOf="@+id/playAction"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/playAction"
         app:layout_constraintTop_toTopOf="@+id/playAction" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/songTitle"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/song_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:text="@string/songs"
-        android:fontFamily="@font/poppinsbold"
-        android:textSize="25dp"
-        android:textColor="?android:attr/textColorPrimary"
-        android:textStyle="bold"
+        android:layout_marginHorizontal="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/playAction" />
+        app:layout_constraintTop_toBottomOf="@id/playAction">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/songTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="@string/songs"
+            android:fontFamily="@font/poppinsbold"
+            android:textSize="25dp"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add"
+            android:background="@android:color/transparent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:tint="@color/text_default_color" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_songs"
@@ -62,7 +89,7 @@
         android:overScrollMode="@integer/overScrollMode"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/songTitle"
+        app:layout_constraintTop_toBottomOf="@id/song_view"
         tools:listitem="@layout/item_song" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
