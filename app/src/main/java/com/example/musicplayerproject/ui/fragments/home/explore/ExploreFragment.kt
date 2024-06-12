@@ -5,18 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.musicplayerproject.R
+import androidx.recyclerview.widget.RecyclerView
+import com.example.musicplayerproject.databinding.FragmentExploreBinding
+import com.example.musicplayerproject.network.ApiConfig
 import com.example.musicplayerproject.response.MusicResponse
 import com.example.musicplayerproject.response.TrackItem
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import androidx.recyclerview.widget.RecyclerView
-import com.example.musicplayerproject.network.ApiConfig
 
 class ExploreFragment : Fragment() {
 
+    private var _binding: FragmentExploreBinding? = null
+    private val binding get() = _binding!!
     private lateinit var musicAdapter: MusicAdapter
     private lateinit var recyclerView: RecyclerView
 
@@ -24,10 +27,8 @@ class ExploreFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_explore, container, false)
-        recyclerView = view.findViewById(R.id.music_explore_recyclerview)
-        return view
+        _binding = FragmentExploreBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,12 +36,17 @@ class ExploreFragment : Fragment() {
 
         // Initialize the adapter and RecyclerView
         musicAdapter = MusicAdapter(requireContext(), arrayListOf())
+        recyclerView = binding.musicExploreRecyclerview
         recyclerView.adapter = musicAdapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.setHasFixedSize(true)
 
         // Fetch and set data
         getMusicData()
+
+        binding.toolbar.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
     private fun getMusicData() {
@@ -58,5 +64,10 @@ class ExploreFragment : Fragment() {
                 // Handle error
             }
         })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

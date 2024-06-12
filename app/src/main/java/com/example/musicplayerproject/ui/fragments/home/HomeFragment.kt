@@ -18,12 +18,17 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.musicplayerproject.R
 import com.example.musicplayerproject.data.models.Music
 import com.example.musicplayerproject.data.models.MusicFiles
+import com.example.musicplayerproject.data.models.MusicPlaylist
+import com.example.musicplayerproject.data.models.Playlist
+import com.example.musicplayerproject.data.models.setDialogBtnBackground
 import com.example.musicplayerproject.data.repositories.MusicRepository
+import com.example.musicplayerproject.databinding.AddPlaylistDialogBinding
 import com.example.musicplayerproject.databinding.FragmentHomeBinding
 import com.example.musicplayerproject.ui.fragments.profile.EditProfile
 import com.example.musicplayerproject.ui.fragments.profile.ProfileFragment
@@ -31,21 +36,27 @@ import com.example.musicplayerproject.ui.fragments.profile.SettingPreferences
 import com.example.musicplayerproject.ui.fragments.profile.ViewModelFactory
 import com.example.musicplayerproject.ui.fragments.profile.dataStore
 import com.example.musicplayerproject.ui.fragments.search.MusicAdapter
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.io.IOException
 
 class HomeFragment : Fragment() {
 
     private lateinit var rvExplore: RecyclerView
     private lateinit var rvPlaylist: RecyclerView
+    private lateinit var rvSongs: RecyclerView
 
+    private lateinit var listSongAdapter: ListSongAdapter
     private lateinit var musicAdapter: MusicAdapter
     private lateinit var musicRepository: MusicRepository
     private lateinit var musicFiles: ArrayList<MusicFiles>
     private lateinit var filteredMusicFiles: ArrayList<MusicFiles>
+    private lateinit var adapter: ListPlaylistAdapter
+
+//    private lateinit var listPlaylistAdapter: ListPlaylistAdapter
 
     // Daftar musik yang dijelajahi dan playlist
     private val listExplore = ArrayList<Music>()
-    private val listPlaylist = ArrayList<Playlist>()
+//    private val listPlaylist = ArrayList<Playlist>()
 
     // Binding untuk layout FragmentHomeBinding
     private var _binding: FragmentHomeBinding? = null
@@ -59,6 +70,7 @@ class HomeFragment : Fragment() {
         const val ACTION_UPDATE_PROFILE_IMAGE = "com.example.UPDATE_PROFILE_IMAGE"
         const val PROFILE_IMAGE_FILENAME = "profile_image.png"
         const val KEY_USERNAME = "username"
+        var musicPlaylist: MusicPlaylist = MusicPlaylist()
     }
 
     override fun onCreateView(
@@ -67,23 +79,51 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        return binding.root
+        val root: View = binding.root
+
+        musicRepository = MusicRepository()
+
+        // Initialize the music files lists
+        musicFiles = arrayListOf()
+
+        setupRecyclerViewSongs()
+        loadMusicFiles()
+
+        return root
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.rvPlaylist.setHasFixedSize(true)
+        binding.rvPlaylist.setItemViewCacheSize(13)
+        binding.rvPlaylist.layoutManager = GridLayoutManager(requireContext(), 2)
+        adapter = ListPlaylistAdapter(requireContext(), playlistList = musicPlaylist.ref)
+        binding.rvPlaylist.adapter = adapter
+
+        if (musicPlaylist.ref.isNotEmpty()) binding.instructionPA.visibility = View.GONE
+        // Initialize adapter and set it to RecyclerView
+
+//        adapter = ListPlaylistAdapter(requireContext(), listPlaylist)
+//        binding.rvPlaylist.adapter = adapter
+//        binding.rvPlaylist.layoutManager = LinearLayoutManager(requireContext())
+
+        // Set up addPlaylist button listener
+        binding.addPlaylistBtn.setOnClickListener { customAlertDialog() }
+
         // Inisialisasi RecyclerView untuk daftar musik yang dijelajahi dan playlist
         rvExplore = view.findViewById(R.id.rv_explore)
         setupRecyclerViewExplore(rvExplore, listExplore)
 
-        rvPlaylist = view.findViewById(R.id.rv_playlist)
-        setupRecyclerViewPlaylist(rvPlaylist, listPlaylist)
+        rvSongs = view.findViewById(R.id.rv_songs)
 
-        // Mengambil daftar musik dan playlist dari sumber daya
+        // Mengambil daftar musik dan playlist
         listExplore.addAll(getListMusic())
-        listPlaylist.addAll(getListPlaylist())
+//        listPlaylist.addAll(getListPlaylist())
+
+        // Refresh adapter's playlist
+        adapter.refreshPlaylist()
 
         // Inisialisasi ViewModel dengan factory
         val pref = SettingPreferences.getInstance(requireContext().dataStore)
@@ -124,16 +164,50 @@ class HomeFragment : Fragment() {
             }
         }
         val profileImageFilter = IntentFilter(ACTION_UPDATE_PROFILE_IMAGE)
-        requireContext().registerReceiver(
-            profileImageReceiver, profileImageFilter,
-            Context.RECEIVER_NOT_EXPORTED
-        )
+        requireContext().registerReceiver(profileImageReceiver, profileImageFilter,
+            Context.RECEIVER_NOT_EXPORTED)
 
         // Memuat gambar profil saat fragment dimulai
         loadProfileImage()
     }
 
-    // Fungsi untuk mengatur RecyclerView untuk daftar musik yang dijelajahi
+    private fun customAlertDialog() {
+        val customDialog = LayoutInflater.from(requireContext()).inflate(R.layout.add_playlist_dialog, binding.root, false)
+        val binder = AddPlaylistDialogBinding.bind(customDialog)
+        val builder = MaterialAlertDialogBuilder(requireContext())
+        val dialog = builder.setView(customDialog)
+            .setTitle("Playlist Details")
+            .setPositiveButton("ADD") { dialog, _ ->
+                val playlistName = binder.playlistName.text
+                if (playlistName != null)
+                    if (playlistName.isNotEmpty()) {
+                        addPlaylist(playlistName.toString())
+                    }
+                dialog.dismiss()
+            }.create()
+        dialog.show()
+        setDialogBtnBackground(requireContext(), dialog)
+    }
+
+    private fun addPlaylist(name: String) {
+        var playlistExists = false
+        for (i in musicPlaylist.ref) {
+            if (name == i.name) {
+                playlistExists = true
+                break
+            }
+        }
+        if (playlistExists) {
+            Toast.makeText(requireContext(), "Playlist Exist!!", Toast.LENGTH_SHORT).show()
+        } else {
+            val tempPlaylist = Playlist()
+            tempPlaylist.name = name
+            tempPlaylist.playlist = ArrayList()
+            musicPlaylist.ref.add(tempPlaylist)
+            adapter.refreshPlaylist()
+        }
+    }
+
     private fun setupRecyclerViewExplore(recyclerView: RecyclerView, list: ArrayList<Music>) {
         recyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -147,36 +221,20 @@ class HomeFragment : Fragment() {
         })
     }
 
-    // Fungsi untuk mengatur RecyclerView untuk playlist
-    private fun setupRecyclerViewPlaylist(recyclerView: RecyclerView, list: ArrayList<Playlist>) {
-        recyclerView.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        val listPlaylistAdapter = ListPlaylistAdapter(list)
-        recyclerView.adapter = listPlaylistAdapter
+    private fun setupRecyclerViewSongs() {
+        val recyclerView = binding.rvSongs
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        listPlaylistAdapter.setOnItemClickCallback(object :
-            ListPlaylistAdapter.OnItemClickCallback {
-            override fun onItemClicked(data: Playlist) {
-                showSelectedPlaylist(data)
+        listSongAdapter = ListSongAdapter(musicFiles)
+        recyclerView.adapter = listSongAdapter
+
+        listSongAdapter.setOnItemClickCallback(object : ListSongAdapter.OnItemClickCallback {
+            override fun onItemClicked(data: MusicFiles) {
+                Toast.makeText(requireContext(), "is selected music", Toast.LENGTH_SHORT).show()
             }
         })
     }
 
-//    private fun setupRecyclerViewSong() {
-//        val recyclerView = binding.fragmentAlbumContent.rvSongs
-//        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-//
-//        listSongAdapter = ListSongAdapter(filteredMusicFiles)
-//        recyclerView.adapter = listSongAdapter
-//
-//        listSongAdapter.setOnItemClickCallback(object : ListSongAdapter.OnItemClickCallback {
-//            override fun onItemClicked(data: MusicFiles) {
-//                // Handle item click
-//            }
-//        })
-//    }
-
-    // Fungsi untuk mengambil daftar musik dari sumber daya
     private fun getListMusic(): ArrayList<Music> {
         val dataImg = resources.obtainTypedArray(R.array.music_img)
         val listMusic = ArrayList<Music>()
@@ -191,22 +249,20 @@ class HomeFragment : Fragment() {
         return listMusic
     }
 
-    // Fungsi untuk mengambil playlist dari sumber daya
-    private fun getListPlaylist(): ArrayList<Playlist> {
-        val dataImg = resources.obtainTypedArray(R.array.playlist_img)
-        val listPlaylist = ArrayList<Playlist>()
-        try {
-            for (i in 0 until dataImg.length()) {
-                val playlist = Playlist(dataImg.getResourceId(i, -1))
-                listPlaylist.add(playlist)
-            }
-        } finally {
-            dataImg.recycle()
-        }
-        return listPlaylist
-    }
+//    private fun getListPlaylist(): ArrayList<Playlist> {
+//        val dataImg = resources.obtainTypedArray(R.array.playlist_img)
+//        val listPlaylist = ArrayList<Playlist>()
+//        try {
+//            for (i in 0 until dataImg.length()) {
+//                val playlist = Playlist(dataImg.getResourceId(i, -1))
+//                listPlaylist.add(playlist)
+//            }
+//        } finally {
+//            dataImg.recycle()
+//        }
+//        return listPlaylist
+//    }
 
-    // Fungsi yang dipanggil saat item musik dipilih
     private fun showSelectedMusic(music: Music) {
         context?.let {
             Toast.makeText(it, "is selected music", Toast.LENGTH_SHORT).show()
@@ -214,26 +270,21 @@ class HomeFragment : Fragment() {
         }
     }
 
-    // Fungsi yang dipanggil saat item playlist dipilih
-    private fun showSelectedPlaylist(playlist: Playlist) {
-        context?.let {
-            Toast.makeText(it, "is selected playlist", Toast.LENGTH_SHORT).show()
-            findNavController().navigate(R.id.action_homeFragment_to_playlistFragment)
+//    private fun showSelectedPlaylist(playlist: Playlist) {
+//        context?.let {
+//            Toast.makeText(it, "is selected playlist", Toast.LENGTH_SHORT).show()
+//            findNavController().navigate(R.id.action_homeFragment_to_playlistFragment)
+//        }
+//    }
 
-        }
-    }
-
-    // Fungsi untuk mengambil username dari SharedPreferences
     private fun getUsername(): String? {
         val sharedPref =
             requireContext().getSharedPreferences(ProfileFragment.PREF_NAME, Context.MODE_PRIVATE)
         return sharedPref.getString(ProfileFragment.KEY_USERNAME, null)
     }
 
-    // Fungsi untuk memuat gambar profil
     private fun loadProfileImage() {
         Log.d("HomeFragment", "Loading profile image")
-        // Memuat gambar profil dari File Storage
         val bitmap = loadImageFromInternalStorage(PROFILE_IMAGE_FILENAME)
         bitmap?.let {
             Log.d("HomeFragment", "Profile image loaded")
@@ -241,7 +292,6 @@ class HomeFragment : Fragment() {
         } ?: Log.d("HomeFragment", "Failed to load profile image")
     }
 
-    // Fungsi untuk memuat gambar dari penyimpanan internal aplikasi.
     private fun loadImageFromInternalStorage(filename: String): Bitmap? {
         return try {
             requireContext().openFileInput(filename).use { fis ->
@@ -253,20 +303,15 @@ class HomeFragment : Fragment() {
         }
     }
 
-//    private fun loadMusicFiles() {
-//        // Call repository method to get all audio files
-//        musicFiles.clear()
-//        musicFiles.addAll(musicRepository.getAllAudio(requireContext()))
-//        // Initially display all music files
-//        filteredMusicFiles.clear()
-//        filteredMusicFiles.addAll(musicFiles)
-//    }
+    private fun loadMusicFiles() {
+        musicFiles.clear()
+        musicFiles.addAll(musicRepository.getAllAudio(requireContext()))
+    }
 
-    // Fungsi untuk membersihkan resource yang tidak lagi dibutuhkan
     override fun onDestroyView() {
         super.onDestroyView()
         requireContext().unregisterReceiver(usernameReceiver)
-        requireContext().unregisterReceiver(profileImageReceiver) // Unregister profile image receiver
+        requireContext().unregisterReceiver(profileImageReceiver)
         _binding = null
     }
 }
