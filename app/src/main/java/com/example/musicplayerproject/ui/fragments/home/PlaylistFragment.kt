@@ -15,7 +15,7 @@ class PlaylistFragment : Fragment() {
     private var _binding: FragmentPlaylistBinding? = null
     private val binding get() = _binding!!
     private val sharedViewModel: SharedViewModel by activityViewModels()
-    private lateinit var listSongAdapter: ListSongAdapter
+    private lateinit var listSongAdapter: ListMusicAdapter
     private lateinit var musicRepository: MusicRepository
     private lateinit var musicFiles: ArrayList<MusicFiles>
     private lateinit var filteredMusicFiles: ArrayList<MusicFiles>
