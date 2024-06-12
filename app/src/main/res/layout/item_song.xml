@@ -1,78 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:cardCornerRadius="15dp"
-    android:layout_gravity="center">
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:layout_marginStart="2dp"
+    android:layout_marginEnd="2dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="horizontal">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <FrameLayout
+        android:id="@+id/imageContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="0"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <FrameLayout
-            android:id="@+id/imageContainer"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_weight="0"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/imageText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:maxLines="1"
-                android:maxHeight="2dp"
-                android:textColor="?android:attr/textColorSecondary"
-                tools:src="@tools:sample/avatars" />
-        </FrameLayout>
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/titleMusic"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+        <ImageView
+            android:id="@+id/imageText"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
             android:maxLines="1"
-            android:layout_marginStart="5dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/timeMusic"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/imageContainer"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="@tools:sample/lorem" />
+            android:minHeight="40dp"
+            android:textColor="?android:attr/textColorSecondary"
+            tools:src="@tools:sample/avatars" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/timeMusic"
+            android:id="@+id/time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="52dp"
             android:layout_weight="0"
             android:padding="8dp"
             android:textColor="?android:attr/textColorSecondary"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/menu"
-            app:layout_constraintTop_toTopOf="parent"
             tools:text="@tools:sample/date/hhmm" />
+    </FrameLayout>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_weight="1"
+        android:maxLines="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/time"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageContainer"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@tools:sample/lorem" />
 
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/menu"
-            style="@style/OverFlowButton"
-            android:layout_gravity="center"
-            android:layout_margin="0dp"
-            android:layout_weight="0"
-            android:rotation="90"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="?attr/colorControlNormal"
-            tools:visibility="visible" />
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/menu"
+        style="@style/OverFlowButton"
+        android:layout_gravity="center"
+        android:layout_margin="0dp"
+        android:layout_weight="0"
+        android:rotation="90"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="?attr/colorControlNormal"
+        tools:visibility="visible" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.cardview.widget.CardView>
+    <!--    <Button-->
+    <!--        android:layout_width=""-->
+    <!--        android:layout_height=""/>-->
+</androidx.constraintlayout.widget.ConstraintLayout>

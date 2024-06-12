@@ -11,7 +11,7 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:backgroundTint="@color/text_dark_mode_color"
+        android:background="@color/white"
         android:fitsSystemWindows="true"
         app:liftOnScroll="true">
 

@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.musicplayerproject.data.models.MusicFiles
 import com.example.musicplayerproject.databinding.SearchResultRecyclerviewBinding
-import com.example.musicplayerproject.ui.search.MusicFiles
 
 class MusicAdapter(private val listMusic: ArrayList<MusicFiles>) :
     RecyclerView.Adapter<MusicAdapter.ListViewHolder>() {
@@ -32,6 +31,7 @@ class MusicAdapter(private val listMusic: ArrayList<MusicFiles>) :
         with(holder.binding) {
             songTitle.text = musicFile.getTitle()
             songSinger.text = musicFile.getArtist()
+
         }
         holder.itemView.setOnClickListener {
             onItemClickCallback.onItemClicked(listMusic[holder.adapterPosition])

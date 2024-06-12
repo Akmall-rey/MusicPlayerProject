@@ -5,12 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
+import androidx.fragment.app.activityViewModels
+import com.example.musicplayerproject.data.models.MusicFiles
+import com.example.musicplayerproject.data.repositories.MusicRepository
 import com.example.musicplayerproject.databinding.FragmentPlaylistBinding
+import com.example.musicplayerproject.ui.shared.SharedViewModel
 
 class PlaylistFragment : Fragment() {
     private var _binding: FragmentPlaylistBinding? = null
     private val binding get() = _binding!!
+    private val sharedViewModel: SharedViewModel by activityViewModels()
+    private lateinit var listSongAdapter: ListMusicAdapter
+    private lateinit var musicRepository: MusicRepository
+    private lateinit var musicFiles: ArrayList<MusicFiles>
+    private lateinit var filteredMusicFiles: ArrayList<MusicFiles>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -19,17 +27,44 @@ class PlaylistFragment : Fragment() {
         _binding = FragmentPlaylistBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+//        // Initialize the repository
+//        musicRepository = MusicRepository()
+//
+//        // Initialize the music files lists
+//        musicFiles = arrayListOf()
+//        filteredMusicFiles = arrayListOf()
+//
+//        // Set up the RecyclerView
+//        setupRecyclerView()
+//
+//        loadMusicFiles()
+
         return root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+//    private fun setupRecyclerViewSong() {
+//        val recyclerView = binding.fragmentAlbumContent.rvSongs
+//        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+//
+//        listSongAdapter = ListSongAdapter(filteredMusicFiles)
+//        recyclerView.adapter = listSongAdapter
+//
+//        listSongAdapter.setOnItemClickCallback(object : ListSongAdapter.OnItemClickCallback {
+//            override fun onItemClicked(data: MusicFiles) {
+//                // Handle item click
+//            }
+//        })
+//    }
+//
+//    private fun loadMusicFiles() {
+//        // Call repository method to get all audio files
+//        musicFiles.clear()
+//        musicFiles.addAll(musicRepository.getAllAudio(requireContext()))
+//        // Initially display all music files
+//        filteredMusicFiles.clear()
+//        filteredMusicFiles.addAll(musicFiles)
+//    }
 
-        // Menangani event klik pada ikon navigasi
-        binding.toolbar.setNavigationOnClickListener {
-            findNavController().navigateUp()
-        }
-    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
