@@ -42,4 +42,5 @@
         android:label="fragment_explore"
         tools:layout="@layout/fragment_explore" />
 
+
 </navigation>

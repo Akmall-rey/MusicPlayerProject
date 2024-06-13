@@ -11,6 +11,24 @@
         <item name="android:focusable">false</item>
     </style>
 
+    <style name="playButton">
+        <item name="srcCompat">@drawable/ic_play_arrow</item>
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:scaleType">center</item>
+        <item name="android:focusableInTouchMode">false</item>
+        <item name="android:focusable">false</item>
+    </style>
+
+    <style name="pauseButton">
+        <item name="srcCompat">@drawable/baseline_pause_24</item>
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:scaleType">center</item>
+        <item name="android:focusableInTouchMode">false</item>
+        <item name="android:focusable">false</item>
+    </style>
+
     <style name="TextViewButton" parent="TextAppearance.MaterialComponents.Button" />
 
     <style name="Toolbar" parent="Widget.Material3.Toolbar">

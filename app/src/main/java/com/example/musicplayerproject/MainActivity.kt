@@ -4,9 +4,11 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
@@ -16,6 +18,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.musicplayerproject.data.models.MusicFiles
 import com.example.musicplayerproject.data.repositories.MusicRepository
 import com.example.musicplayerproject.databinding.ActivityMainBinding
+import com.example.musicplayerproject.ui.fragments.musicPlayer
 import com.example.musicplayerproject.ui.shared.SharedViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -24,6 +27,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val sharedViewModel: SharedViewModel by viewModels()
+    private lateinit var musicplaycard:CardView
 
 
     companion object {
@@ -53,6 +57,9 @@ class MainActivity : AppCompatActivity() {
 
         // Request permission
         requestPermission()
+        musicplaycard = findViewById<CardView>(R.id.musicCard)
+        musicplaycard.visibility = View.INVISIBLE
+        //musicplaycard.setOnClickListener {  }
     }
 
     private fun requestPermission() {
@@ -117,6 +124,8 @@ class MainActivity : AppCompatActivity() {
         val musicList = getAllMusic()
         sharedViewModel.setMusicFiles(musicList)
     }
+
+
 
 
 }

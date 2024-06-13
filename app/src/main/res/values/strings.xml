@@ -42,6 +42,9 @@
     <string name="playlist_name">Playlist Name</string>
     <string name="playlist_note">Tip: Click On ➕ To Create New Playlist.</string>
     <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </string>
+    <string name="user_name">Your Name</string>
+    <string name="playlist_btn">Playlist</string>
+    <string name="back_btn">Back</string>
 
 
 </resources>

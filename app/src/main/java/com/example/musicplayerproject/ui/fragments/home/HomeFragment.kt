@@ -6,6 +6,8 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.media.AudioManager
+import android.media.MediaPlayer
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +17,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -44,6 +47,11 @@ class HomeFragment : Fragment() {
     private lateinit var rvExplore: RecyclerView
     private lateinit var rvPlaylist: RecyclerView
     private lateinit var rvSongs: RecyclerView
+    private lateinit var musicCard:CardView
+
+    private var playingmusic:Boolean = false
+    private var musicPlayer: MediaPlayer? = null
+    private var currentPlayingPath: String = ""
 
     private lateinit var listSongAdapter: ListSongAdapter
     private lateinit var musicAdapter: MusicAdapter
@@ -71,6 +79,7 @@ class HomeFragment : Fragment() {
         const val PROFILE_IMAGE_FILENAME = "profile_image.png"
         const val KEY_USERNAME = "username"
         var musicPlaylist: MusicPlaylist = MusicPlaylist()
+        var musicPlaying:String = ""
     }
 
     override fun onCreateView(
@@ -102,6 +111,7 @@ class HomeFragment : Fragment() {
         adapter = ListPlaylistAdapter(requireContext(), playlistList = musicPlaylist.ref)
         binding.rvPlaylist.adapter = adapter
 
+
         if (musicPlaylist.ref.isNotEmpty()) binding.instructionPA.visibility = View.GONE
         // Initialize adapter and set it to RecyclerView
 
@@ -117,6 +127,7 @@ class HomeFragment : Fragment() {
         setupRecyclerViewExplore(rvExplore, listExplore)
 
         rvSongs = view.findViewById(R.id.rv_songs)
+//        musicCard = view.findViewById(R.id.musicCard)
 
         // Mengambil daftar musik dan playlist
         listExplore.addAll(getListMusic())
@@ -221,6 +232,20 @@ class HomeFragment : Fragment() {
         })
     }
 
+//    private fun setupRecyclerViewSongs() {
+//        val recyclerView = binding.rvSongs
+//        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+//
+//        listSongAdapter = ListSongAdapter(musicFiles)
+//        recyclerView.adapter = listSongAdapter
+//
+//        listSongAdapter.setOnItemClickCallback(object : ListSongAdapter.OnItemClickCallback {
+//            override fun onItemClicked(data: MusicFiles) {
+//                Toast.makeText(requireContext(), "is selected music", Toast.LENGTH_SHORT).show()
+//            }
+//        })
+//    }
+
     private fun setupRecyclerViewSongs() {
         val recyclerView = binding.rvSongs
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -230,7 +255,14 @@ class HomeFragment : Fragment() {
 
         listSongAdapter.setOnItemClickCallback(object : ListSongAdapter.OnItemClickCallback {
             override fun onItemClicked(data: MusicFiles) {
-                Toast.makeText(requireContext(), "is selected music", Toast.LENGTH_SHORT).show()
+                if(!isPlayingMusic()) {
+                    startMusic(data.getPath())
+                    musicPlaying = data.getPath()
+                } else {
+                    stopMusic()
+                    startMusic(data.getPath())
+                    musicPlaying = data.getPath()
+                }
             }
         })
     }
@@ -313,5 +345,41 @@ class HomeFragment : Fragment() {
         requireContext().unregisterReceiver(usernameReceiver)
         requireContext().unregisterReceiver(profileImageReceiver)
         _binding = null
+    }
+
+    private fun startMusic(path: String) {
+        if (musicPlayer == null) {
+            musicPlayer = MediaPlayer()
+        }
+        try {
+            musicPlayer?.apply {
+                reset()
+                setAudioStreamType(AudioManager.STREAM_MUSIC)
+                setDataSource(path)
+                prepare()
+                start()
+            }
+            isPlayingMusic(true)
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun stopMusic() {
+        musicPlayer?.apply {
+            if (isPlaying) {
+                stop()
+                reset()
+            }
+        }
+        isPlayingMusic(false)
+    }
+
+    private fun isPlayingMusic(): Boolean {
+        return musicPlayer?.isPlaying == true
+    }
+
+    private fun isPlayingMusic(state: Boolean) {
+        playingmusic = state
     }
 }
