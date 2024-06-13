@@ -26,5 +26,25 @@
             android:maxLength="40"/>
     </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:boxStrokeColor="@color/abae_76"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="10dp"
+        app:startIconDrawable="@drawable/playlist_icon"
+        app:startIconTint="@color/abae_76"
+        android:hint="@string/user_name"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/yourName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:singleLine="true"
+            android:paddingStart="50dp"
+            android:inputType="text"
+            android:maxLength="40"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
 
 </LinearLayout>
